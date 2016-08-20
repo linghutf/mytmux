@@ -1,0 +1,58 @@
+** server_env_config
+- vim,coding environment
+- emacs,document environment
+- tmux,terminal document
+
+** tmux config
+
+*** usage
+
+#+BEGIN_SRC bash
+
+mv ./.tmux.conf ~/.tmux.conf.bak
+cp mytmux/.tmux.conf ~/.tmux.conf
+
+#+END_SRC
+
+*** key map
+- C-b instead by C-a
+| key                    | result              |
+|------------------------+---------------------|
+| C-a \                  | add vert pane       |
+| C-a -                  | add hori pane       |
+| C-a left,down,right,up | change pane         |
+| C-a H,J,K,L            | resize pane         |
+| C-a t,T                | change window       |
+| C-a c                  | create window       |
+| C-a d                  | exit session        |
+| tmux ls                | list tmux session   |
+| tmux atttach -t ID     | renter tmux session | 
+  
+** vim config
+- [[https://github.com/wklken/k-vim.git][k-vim]]
+- vimrc [my vimrc change ]
+
+*** changelog
+- colorscheme molokai
+- set tags+=./tags
+- add user project make config
+
+** key map
+- NERDtree
+- quickfix
+| key       | result            |
+|-----------+-------------------|
+| R         | reload NERDtree   |
+| ``        | last change pos   |
+| F9        | Taglist           |
+| F5        | paste env         |
+| :copen    | quickfix window   |
+| :cclose   | exit quickfix win |
+| C-h,j,k,l | change vim panel  |
+
+** emacs config
+- [[https://github.com/syl20bnr/spacemacs][spacemacs]]
+- .spacemacs [my emacs config ]
+
+*** key map
+- visit my another repo for help: [[https://github.com/linghutf/emacs-doc.git][emacs-doc]]
