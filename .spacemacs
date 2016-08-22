@@ -24,21 +24,24 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
-	 c-c++
-	 csharp
-	 lua
      better-defaults
      emacs-lisp
+     c-c++
+     csharp
+     ;; lua
+     latex
+     (latex :variables 
+            latex-enable-auto-fill t
+            latex-enable-folding t)
      ;; git
-	 latex
      markdown
      org
      (shell :variables
              shell-default-height 30
              shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     ;; version-control
+      spell-checking
+      syntax-checking
+      ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -100,18 +103,18 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
-                         ;; spacemacs-light
-                         ;; solarized-light
-                         ;; solarized-dark
-                         ;; leuven
+                         spacemacs-light
+                         solarized-light
+                         solarized-dark
+                         leuven
                          monokai)
-                         ;; zenburn)
+                         ;;zenburn)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Consolas"
-                               :size 16
+                               :size 20
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -245,20 +248,38 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (setq configuration-layer--elpa-archives
-     '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")                                      
-         ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-         ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))   
+    '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+      ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+      ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
   )
-
+  ;; 缩进
+(defun my-setup-indent (n)
+  ;; java/c/c++
+  (setq c-basic-offset n)
+  ;; web development
+  (setq coffee-tab-width n) ; coffeescript
+  (setq javascript-indent-level n) ; javascript-mode
+  (setq js-indent-level n) ; js-mode
+  (setq js2-basic-offset n) ; js2-mode, in latest js2-mode, it's alias of js-indent-level
+  (setq web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+  (setq web-mode-css-indent-offset n) ; web-mode, css in html file
+  (setq web-mode-code-indent-offset n) ; web-mode, js code in html file
+  (setq css-indent-offset n) ; css-mode
+  )
+  
 (defun dotspacemacs/user-config ()
-  (setq indent-tabs-mode nil)
-  (setq tab-width 4)
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+   (my-setup-indent 4)
+   ;; 行号
+   (global-linum-mode 1)
+   ;; latex preview
+   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+   ;;(setq latex-enable-auto-fill t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -268,9 +289,11 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#d2ceda" "#f2241f" "#67b11d" "#b1951d" "#3a81c3" "#a31db1" "#21b8c7" "#655370"])
  '(package-selected-packages
    (quote
-    (lua-mode omnisharp csharp-mode disaster company-c-headers cmake-mode clang-format org-plus-contrib xterm-color toc-org shell-pop org-repo-todo org-present org-pomodoro alert log4e gntp org-bullets multi-term mmm-mode helm-c-yasnippet flycheck-pos-tip flycheck company-auctex auto-yasnippet ws-butler window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox hydra spinner page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async which-key use-package spacemacs-theme quelpa evil bind-map))))
+    (omnisharp csharp-mode lua-mode disaster company-c-headers cmake-mode clang-format company-auctex auctex-latexmk auctex solarized-theme xterm-color toc-org smeargle shell-pop orgit org-repo-todo org-present org-pomodoro alert log4e gntp org-plus-contrib org-bullets multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore request helm-flyspell helm-company helm-c-yasnippet gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md flycheck-pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-prompt-extras esh-help diff-hl company-statistics company-quickhelp pos-tip company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete monokai-theme ws-butler window-numbering volatile-highlights vi-tilde-fringe spaceline s powerline smooth-scrolling restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox hydra spinner page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-args evil-anzu anzu eval-sexp-fu highlight elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build use-package which-key bind-key bind-map evil spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

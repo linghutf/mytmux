@@ -4,27 +4,25 @@
 - tmux,terminal document
 
 ** tmux config
-
+- [[https://github.com/gpakosz/.tmux][.tmux]]
+*** tmux>=1.9
 *** usage
 
 #+BEGIN_SRC bash
-
-mv ./.tmux.conf ~/.tmux.conf.bak
-cp mytmux/.tmux.conf ~/.tmux.conf
-
+ln -s .tmux.conf ~/.tmux.conf
+ln -s .tmux.conf.local ~/.tmux.conf
 #+END_SRC
 
 *** key map
 - C-b instead by C-a
 | key                    | result              |
 |------------------------+---------------------|
-| C-a \                  | add vert pane       |
-| C-a -                  | add hori pane       |
-| C-a left,down,right,up | change pane         |
-| C-a H,J,K,L            | resize pane         |
-| C-a t,T                | change window       |
-| C-a c                  | create window       |
-| C-a d                  | exit session        |
+| C-b %                  | add vert pane       |
+| C-b "                  | add hori pane       |
+| C-b left,down,right,up | change pane         |
+| C-b TAB                | change window       |
+| C-b c                  | create window       |
+| C-b d                  | exit session        |
 | tmux ls                | list tmux session   |
 | tmux atttach -t ID     | renter tmux session | 
   
