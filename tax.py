@@ -39,6 +39,6 @@ def prorift(num):
     print "real:",real
 
 if __name__ == '__main__':
-    num = int(sys.argv[1])
+    num = float(sys.argv[1])
     prorift(num)
 
