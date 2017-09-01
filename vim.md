@@ -1,4 +1,9 @@
 
+## 设置tags
+- `ctags -R --c++-kinds=+p --fields=+iaS --extra=+q <dir>` 生成tags，最好重命名为.tags文件
+- 在vim中设置`set tags+=~/.tags;,.tags`
+- 使用`<C-w>]`, `<C-w>}`进行跳转
+
 - `"+y`复制到系统粘贴板，`"+p`系统粘贴到vim
 
 | 操作 | 作用 |
